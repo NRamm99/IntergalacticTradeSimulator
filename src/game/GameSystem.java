@@ -8,6 +8,7 @@ import world.Planet;
 
 public class GameSystem {
     private Player player;
+    private Planet currentPlanet;
     private Planet[] planets;
     private int currentPlanetIndex;
     private Scanner input = new Scanner(System.in);
@@ -24,6 +25,7 @@ public class GameSystem {
         this.player = null;
         this.planets = getPlanets();
         this.currentPlanetIndex = 0;
+        this.currentPlanet = planets[currentPlanetIndex];
     }
 
     private Planet[] getPlanets() {
@@ -56,6 +58,7 @@ public class GameSystem {
                 2. View Current Planet
                 3. Open Market (Coming Soon)
                 4. Travel to Another Planet (Coming Soon)
+                5. Next day (Coming Soon)
 
                 0. Exit Game
                 """);
@@ -64,7 +67,7 @@ public class GameSystem {
         switch (choice) {
             case 1 -> viewShipStatus();
             case 2 -> viewCurrentPlanet();
-
+            case 3 -> promptMarket();
             case 0 -> {
                 Tools.printToConsole("Thank you for playing! Safe travels, Captain " + player.getName() + "!");
                 System.exit(0);
@@ -72,6 +75,12 @@ public class GameSystem {
             default -> Tools.printToConsole("Invalid choice. Please try again.");
         }
 
+    }
+
+    private void promptMarket() {
+        Tools.clearConsole();
+        currentPlanet.printMarket();
+        Tools.waitForUser(input);
     }
 
     private void viewShipStatus() {

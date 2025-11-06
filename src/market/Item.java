@@ -16,14 +16,18 @@ public class Item {
     public String getName() {
         return name;
     }
+
     public double getBasePrice() {
         return basePrice;
     }
+
     public double getCurrentPrice() {
         return currentPrice;
     }
+
     public int getQuantityAvailable() {
         return quantityAvailable;
     }
+
 
 }
