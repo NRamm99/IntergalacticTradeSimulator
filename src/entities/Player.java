@@ -29,4 +29,8 @@ public class Player {
         credits -= (itemAmount * item.getCurrentPrice());
     }
 
+    public void sellItems(Item item, int itemAmount) {
+        credits += (itemAmount * item.getCurrentPrice());
+    }
+
 }

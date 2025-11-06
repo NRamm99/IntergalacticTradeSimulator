@@ -86,12 +86,12 @@ public class GameSystem {
     }
 
     private void promptNextDay() {
-        Tools.printToConsole("Coming Soon");
+        Tools.printToConsole(Tools.RED + "Coming Soon" + Tools.RESET);
         Tools.waitForUser(input);
     }
 
     private void promptTravelToAnotherPlanet() {
-        Tools.printToConsole("Coming Soon");
+        Tools.printToConsole(Tools.RED + "Coming Soon" + Tools.RESET);
         Tools.waitForUser(input);
     }
 
@@ -101,7 +101,28 @@ public class GameSystem {
         for (Map.Entry<Item, Integer> entry : player.getShip().getCargo().entrySet()) {
             currentPlanet.printItem(entry.getKey(), player);
         }
-        Tools.waitForUser(input);
+        int itemId = Tools.validateInt(input, "Enter the ID of the item you want to sell");
+        Item item = (Item) currentPlanet.getMarketItemById(itemId);
+        if (item == null) {
+            Tools.printToConsole("Invalid item ID. Please try again.");
+            Tools.waitForUser(input);
+            return;
+        }
+        int itemAmount = Tools.validateInt(input, "Enter the amount of " + item.getName() + " you want to sell");
+        sellItem(item, itemAmount);
+    }
+
+    private void sellItem(Item item, int itemAmount) {
+        Integer cargoAmount = player.getShip().getCargo().get(item);
+        if (cargoAmount == null || itemAmount > cargoAmount) {
+            Tools.printToConsole("You don't have enough " + item.getName() + " in your cargo to sell " + itemAmount
+                    + ". Please try again.", true);
+            Tools.waitForUser(input);
+            return;
+        }
+        player.sellItems(item, itemAmount);
+        player.getShip().removeItemsFromCargo(item, itemAmount);
+        currentPlanet.addItemsToMarket(item, itemAmount);
     }
 
     private void promptMarketBuy() {

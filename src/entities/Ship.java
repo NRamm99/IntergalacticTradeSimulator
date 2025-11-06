@@ -58,4 +58,17 @@ public class Ship {
         cargo.put(item, cargo.getOrDefault(item, 0) + itemAmount);
         currentCargo += (itemAmount * item.getWeight());
     }
+
+    public void removeItemsFromCargo(Item item, int itemAmount) {
+        Integer currentAmount = cargo.get(item);
+        if (currentAmount != null) {
+            int newAmount = currentAmount - itemAmount;
+            currentCargo -= (itemAmount * item.getWeight());
+            if (newAmount <= 0) {
+                cargo.remove(item);
+            } else {
+                cargo.put(item, newAmount);
+            }
+        }
+    }
 }

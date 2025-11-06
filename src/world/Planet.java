@@ -130,4 +130,8 @@ public class Planet {
 
     }
 
+    public void addItemsToMarket(Item item, int itemAmount) {
+        item.setQuantityAvailable(item.getQuantityAvailable() + itemAmount);
+    }
+
 }
