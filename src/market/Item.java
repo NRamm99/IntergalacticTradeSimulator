@@ -45,4 +45,12 @@ public class Item {
         return itemId;
     }
 
+    public void updateCurrentPrice() {
+        double randomPercentage = (Math.random() * 40 - 20) / 100.0;
+        currentPrice = Math.floor(basePrice * (1 + randomPercentage));
+    }
+
+    public double getPriceChangePercentage() {
+        return Math.round((currentPrice - basePrice) / basePrice * 100);
+    }
 }

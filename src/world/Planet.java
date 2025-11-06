@@ -33,6 +33,7 @@ public class Planet {
                 for (Item item : items) {
                     n++;
                     item.setItemId(n);
+                    item.updateCurrentPrice();
                 }
                 return items;
             }
@@ -94,9 +95,18 @@ public class Planet {
         for (Item item : marketItems) {
             Tools.printToConsole(
                     "ID: " + item.getItemId() + " - " + item.getName() + " | Available: "
-                            + item.getQuantityAvailable() + " | Price: $" + item.getCurrentPrice());
+                            + item.getQuantityAvailable() + " | Price: $" + item.getCurrentPrice() + " "
+                            + displayPriceChangePercentage(item));
         }
+    }
 
+    private String displayPriceChangePercentage(Item item) {
+        double priceChangePercentage = item.getPriceChangePercentage();
+        if (priceChangePercentage > 0) {
+            return "(" + Tools.GREEN + "+" + priceChangePercentage + "%" + Tools.RESET + ")";
+        } else {
+            return "(" + Tools.RED + priceChangePercentage + "%" + Tools.RESET + ")";
+        }
     }
 
 }
