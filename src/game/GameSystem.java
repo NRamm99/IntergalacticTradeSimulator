@@ -1,5 +1,6 @@
 package game;
 
+import java.util.Map;
 import java.util.Scanner;
 
 import entities.Player;
@@ -95,7 +96,11 @@ public class GameSystem {
     }
 
     private void promptMarketSell() {
-        Tools.printToConsole("Coming Soon");
+        Tools.clearConsole();
+        Tools.printToConsole("Balance: $" + player.getCredits());
+        for (Map.Entry<Item, Integer> entry : player.getShip().getCargo().entrySet()) {
+            currentPlanet.printItem(entry.getKey(), player);
+        }
         Tools.waitForUser(input);
     }
 

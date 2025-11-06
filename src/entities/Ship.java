@@ -1,10 +1,9 @@
 package entities;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 import market.Item;
-import utils.Tools;
 
 public class Ship {
     private final String name;
@@ -12,7 +11,7 @@ public class Ship {
     private double currentFuel;
     private double cargoCapacity;
     private double currentCargo;
-    private ArrayList<Item> cargo;
+    private HashMap<Item, Integer> cargo;
 
     public Ship(String name, double fuelCapacity, double cargoCapacity) {
         this.name = name;
@@ -20,7 +19,7 @@ public class Ship {
         this.currentFuel = fuelCapacity;
         this.cargoCapacity = cargoCapacity;
         this.currentCargo = 0;
-        this.cargo = new ArrayList<>();
+        this.cargo = new HashMap<>();
     }
 
     public String getName() {
@@ -43,7 +42,7 @@ public class Ship {
         return currentCargo;
     }
 
-    public List<Item> getCargo() {
+    public Map<Item, Integer> getCargo() {
         return cargo;
     }
 
@@ -56,9 +55,7 @@ public class Ship {
     }
 
     public void addItemsToCargo(Item item, int itemAmount) {
-        for (int i = 0; i < itemAmount; i++) {
-            cargo.add(item);
-        }
+        cargo.put(item, cargo.getOrDefault(item, 0) + itemAmount);
         currentCargo += (itemAmount * item.getWeight());
     }
 }

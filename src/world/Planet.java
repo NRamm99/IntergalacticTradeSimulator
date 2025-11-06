@@ -3,6 +3,7 @@ package world;
 import java.util.ArrayList;
 import java.util.List;
 
+import entities.Player;
 import market.Item;
 import utils.Tools;
 
@@ -109,10 +110,24 @@ public class Planet {
             return "(" + Tools.RED + priceChangePercentage + "%" + Tools.RESET + ")";
         }
     }
-    
 
     public void removeItemsFromMarket(Item item, int itemAmount) {
         item.setQuantityAvailable(item.getQuantityAvailable() - itemAmount);
+    }
+
+    public void printItem(Item userItem, Player player) {
+        for (Item marketItem : marketItems) {
+            if (marketItem.getName().equals(userItem.getName())) {
+                Tools.printToConsole(
+                        "ID: " + marketItem.getItemId() + " - " + marketItem.getName() + " (" + marketItem.getWeight()
+                                + "kg)"
+                                + " | You have: " + player.getShip().getCargo().get(userItem) + " | Price: $"
+                                + marketItem.getCurrentPrice() + " "
+                                + displayPriceChangePercentage(marketItem));
+                return;
+            }
+        }
+
     }
 
 }
