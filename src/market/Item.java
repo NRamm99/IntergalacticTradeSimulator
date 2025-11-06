@@ -6,6 +6,7 @@ public class Item {
     private double basePrice;
     private double currentPrice;
     private int quantityAvailable;
+    private int baseQuantity;
     private double weight;
 
     public Item(String name, double basePrice, int quantityAvailable, double weight) {
@@ -14,6 +15,7 @@ public class Item {
         this.basePrice = basePrice;
         this.currentPrice = basePrice;
         this.quantityAvailable = quantityAvailable;
+        this.baseQuantity = quantityAvailable;
         this.weight = weight;
     }
 
@@ -50,7 +52,19 @@ public class Item {
         currentPrice = Math.floor(basePrice * (1 + randomPercentage));
     }
 
+    public void updateQuantityAvailable() {
+        quantityAvailable = baseQuantity - (int) (Math.random() * baseQuantity);
+    }
+
+    public int getBaseQuantity() {
+        return baseQuantity;
+    }
+
     public double getPriceChangePercentage() {
         return Math.round((currentPrice - basePrice) / basePrice * 100);
+    }
+
+    public void setQuantityAvailable(int quantity) {
+        quantityAvailable = quantity;
     }
 }

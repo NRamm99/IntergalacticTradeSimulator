@@ -52,7 +52,7 @@ public class Ship {
         return "---------- Ship ----------" +
                 "\nName: " + name +
                 "\nFuel: " + "(" + currentFuel + " / " + fuelCapacity + ")" +
-                "\nCargo: " + "(" + currentCargo + " / " + cargoCapacity + ")";
+                "\nCargo: " + "(" + currentCargo + "kg / " + cargoCapacity + "kg)";
     }
 
     public void addItemsToCargo(Item item, int itemAmount) {

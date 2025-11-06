@@ -57,9 +57,12 @@ public class GameSystem {
         Tools.printToConsole("""
                 1. View Ship Status
                 2. View Current Planet
-                3. Open Market (Coming Soon)
-                4. Travel to Another Planet (Coming Soon)
-                5. Next day (Coming Soon)
+
+                3. Open Market (Buy Items)
+                4. Open Market (Sell Items)
+
+                5. Travel to Another Planet (Coming Soon)
+                6. Next day (Coming Soon)
 
                 0. Exit Game
                 """);
@@ -68,7 +71,10 @@ public class GameSystem {
         switch (choice) {
             case 1 -> viewShipStatus();
             case 2 -> viewCurrentPlanet();
-            case 3 -> promptMarket();
+            case 3 -> promptMarketBuy();
+            case 4 -> promptMarketSell();
+            case 5 -> promptTravelToAnotherPlanet();
+            case 6 -> promptNextDay();
             case 0 -> {
                 Tools.printToConsole("Thank you for playing! Safe travels, Captain " + player.getName() + "!");
                 System.exit(0);
@@ -78,7 +84,22 @@ public class GameSystem {
 
     }
 
-    private void promptMarket() {
+    private void promptNextDay() {
+        Tools.printToConsole("Coming Soon");
+        Tools.waitForUser(input);
+    }
+
+    private void promptTravelToAnotherPlanet() {
+        Tools.printToConsole("Coming Soon");
+        Tools.waitForUser(input);
+    }
+
+    private void promptMarketSell() {
+        Tools.printToConsole("Coming Soon");
+        Tools.waitForUser(input);
+    }
+
+    private void promptMarketBuy() {
         Tools.clearConsole();
         Tools.printToConsole("Balance: $" + player.getCredits());
         currentPlanet.printMarket();
@@ -91,30 +112,32 @@ public class GameSystem {
         }
 
         int itemAmount = Tools.validateInt(input, "Enter the amount of " + item.getName() + " you want to buy");
-        if (itemAmount > item.getQuantityAvailable()) {
-            Tools.printToConsole("You can't buy more than " + item.getQuantityAvailable() + " " + item.getName()
-                    + " in stock. Please try again.");
-            return;
-        }
         buyItem(item, itemAmount);
-
-        Tools.waitForUser(input);
     }
 
     private void buyItem(Item item, int itemAmount) {
         if (player.getCredits() < (itemAmount * item.getCurrentPrice())) {
             Tools.printToConsole("You don't have enough credits to buy " + itemAmount + " " + item.getName()
-                    + ". Please try again.");
+                    + ". Please try again.", true);
+            Tools.waitForUser(input);
             return;
         }
         if (player.getShip().getCurrentCargo() + itemAmount * item.getWeight() > player.getShip().getCargoCapacity()) {
             Tools.printToConsole("You don't have enough space in your cargo to add " + itemAmount + " " + item.getName()
-                    + ". Please try again.");
+                    + ". Please try again.", true);
+            Tools.waitForUser(input);
+            return;
+        }
+        if (item.getQuantityAvailable() < itemAmount) {
+            Tools.printToConsole("There are only " + item.getQuantityAvailable() + " " + item.getName()
+                    + " available. Please try again.", true);
+            Tools.waitForUser(input);
             return;
         }
 
         player.buyItems(item, itemAmount);
         player.getShip().addItemsToCargo(item, itemAmount);
+        currentPlanet.removeItemsFromMarket(item, itemAmount);
 
     }
 

@@ -94,7 +94,8 @@ public class Planet {
         Tools.printToConsole("-------------------- Market on " + name + " -------------------");
         for (Item item : marketItems) {
             Tools.printToConsole(
-                    "ID: " + item.getItemId() + " - " + item.getName() + " | Available: "
+                    "ID: " + item.getItemId() + " - " + item.getName() + " (" + item.getWeight() + "kg)"
+                            + " | Available: "
                             + item.getQuantityAvailable() + " | Price: $" + item.getCurrentPrice() + " "
                             + displayPriceChangePercentage(item));
         }
@@ -107,6 +108,11 @@ public class Planet {
         } else {
             return "(" + Tools.RED + priceChangePercentage + "%" + Tools.RESET + ")";
         }
+    }
+    
+
+    public void removeItemsFromMarket(Item item, int itemAmount) {
+        item.setQuantityAvailable(item.getQuantityAvailable() - itemAmount);
     }
 
 }
