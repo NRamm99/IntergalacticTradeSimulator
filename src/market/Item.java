@@ -1,16 +1,20 @@
 package market;
 
 public class Item {
+    private int itemId;
     private final String name;
     private double basePrice;
     private double currentPrice;
     private int quantityAvailable;
+    private double weight;
 
-    public Item(String name, double basePrice, int quantityAvailable) {
+    public Item(String name, double basePrice, int quantityAvailable, double weight) {
+        this.itemId = 0;
         this.name = name;
         this.basePrice = basePrice;
         this.currentPrice = basePrice;
         this.quantityAvailable = quantityAvailable;
+        this.weight = weight;
     }
 
     public String getName() {
@@ -29,5 +33,16 @@ public class Item {
         return quantityAvailable;
     }
 
+    public double getWeight() {
+        return weight;
+    }
+
+    public void setItemId(int newId) {
+        itemId = newId;
+    }
+
+    public int getItemId() {
+        return itemId;
+    }
 
 }

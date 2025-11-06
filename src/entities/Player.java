@@ -1,5 +1,7 @@
 package entities;
 
+import market.Item;
+
 public class Player {
     private String name;
     private double credits;
@@ -21,6 +23,10 @@ public class Player {
 
     public Ship getShip() {
         return ship;
+    }
+
+    public void buyItems(Item item, int itemAmount) {
+        credits -= (itemAmount * item.getCurrentPrice());
     }
 
 }

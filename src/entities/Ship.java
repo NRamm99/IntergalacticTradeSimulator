@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import market.Item;
+import utils.Tools;
 
 public class Ship {
     private final String name;
@@ -52,5 +53,12 @@ public class Ship {
                 "\nName: " + name +
                 "\nFuel: " + "(" + currentFuel + " / " + fuelCapacity + ")" +
                 "\nCargo: " + "(" + currentCargo + " / " + cargoCapacity + ")";
+    }
+
+    public void addItemsToCargo(Item item, int itemAmount) {
+        for (int i = 0; i < itemAmount; i++) {
+            cargo.add(item);
+        }
+        currentCargo += (itemAmount * item.getWeight());
     }
 }

@@ -3,6 +3,7 @@ package game;
 import java.util.Scanner;
 
 import entities.Player;
+import market.Item;
 import utils.Tools;
 import world.Planet;
 
@@ -79,8 +80,42 @@ public class GameSystem {
 
     private void promptMarket() {
         Tools.clearConsole();
+        Tools.printToConsole("Balance: $" + player.getCredits());
         currentPlanet.printMarket();
+
+        int itemId = Tools.validateInt(input, "Enter the ID of the item you want to buy");
+        Item item = (Item) currentPlanet.getMarketItemById(itemId);
+        if (item == null) {
+            Tools.printToConsole("Invalid item ID. Please try again.");
+            return;
+        }
+
+        int itemAmount = Tools.validateInt(input, "Enter the amount of " + item.getName() + " you want to buy");
+        if (itemAmount > item.getQuantityAvailable()) {
+            Tools.printToConsole("You can't buy more than " + item.getQuantityAvailable() + " " + item.getName()
+                    + " in stock. Please try again.");
+            return;
+        }
+        buyItem(item, itemAmount);
+
         Tools.waitForUser(input);
+    }
+
+    private void buyItem(Item item, int itemAmount) {
+        if (player.getCredits() < (itemAmount * item.getCurrentPrice())) {
+            Tools.printToConsole("You don't have enough credits to buy " + itemAmount + " " + item.getName()
+                    + ". Please try again.");
+            return;
+        }
+        if (player.getShip().getCurrentCargo() + itemAmount * item.getWeight() > player.getShip().getCargoCapacity()) {
+            Tools.printToConsole("You don't have enough space in your cargo to add " + itemAmount + " " + item.getName()
+                    + ". Please try again.");
+            return;
+        }
+
+        player.buyItems(item, itemAmount);
+        player.getShip().addItemsToCargo(item, itemAmount);
+
     }
 
     private void viewShipStatus() {

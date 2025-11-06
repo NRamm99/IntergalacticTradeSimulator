@@ -29,10 +29,24 @@ public class Planet {
             items.add(newItem);
 
             if (items.size() >= FULL_MARKET_SIZE) {
+                int n = 0;
+                for (Item item : items) {
+                    n++;
+                    item.setItemId(n);
+                }
                 return items;
             }
         }
 
+    }
+
+    public Object getMarketItemById(int id) {
+        for (Item item : marketItems) {
+            if (item.getItemId() == id) {
+                return item;
+            }
+        }
+        return null;
     }
 
     private Item randomItem() {
@@ -47,26 +61,21 @@ public class Planet {
 
     private ArrayList<Item> getPossibleItems() {
         ArrayList<Item> possibleItems = new ArrayList<>();
-        possibleItems.add(new Item("Food", 10.0, 100));
-        possibleItems.add(new Item("Water", 5.0, 200));
-        possibleItems.add(new Item("Ore", 20.0, 50));
-        possibleItems.add(new Item("Medicine", 50.0, 30));
-        possibleItems.add(new Item("Electronics", 100.0, 20));
-        possibleItems.add(new Item("Fuel Cells", 75.0, 60));
-        possibleItems.add(new Item("Textiles", 15.0, 120));
-        possibleItems.add(new Item("Luxury Goods", 250.0, 10));
-        possibleItems.add(new Item("Microchips", 180.0, 25));
-        possibleItems.add(new Item("Alien Artifacts", 500.0, 5));
-        possibleItems.add(new Item("Weapons", 300.0, 15));
-        possibleItems.add(new Item("Spare Parts", 45.0, 70));
-        possibleItems.add(new Item("Data Crystals", 90.0, 40));
-        possibleItems.add(new Item("Robotics Components", 220.0, 18));
-        possibleItems.add(new Item("Nano-Fibers", 130.0, 35));
-        possibleItems.add(new Item("Holographic Modules", 160.0, 28));
-        possibleItems.add(new Item("Quantum Batteries", 400.0, 8));
-        possibleItems.add(new Item("Terraforming Tools", 350.0, 12));
-        possibleItems.add(new Item("Rare Minerals", 280.0, 20));
-        possibleItems.add(new Item("Plasma Coils", 150.0, 25));
+        possibleItems.add(new Item("Water", 20, 10, 10));
+        possibleItems.add(new Item("Food Rations", 35, 15, 8));
+        possibleItems.add(new Item("Metal Ore", 120, 8, 25));
+        possibleItems.add(new Item("Fuel Cells", 90, 12, 15));
+        possibleItems.add(new Item("Medical Supplies", 150, 6, 5));
+        possibleItems.add(new Item("Luxury Fabrics", 300, 5, 3));
+        possibleItems.add(new Item("Alien Artifacts", 800, 2, 2));
+        possibleItems.add(new Item("Plasma Batteries", 200, 7, 12));
+        possibleItems.add(new Item("Nano Components", 400, 4, 6));
+        possibleItems.add(new Item("Robot Parts", 250, 6, 18));
+        possibleItems.add(new Item("Quantum Circuits", 600, 3, 4));
+        possibleItems.add(new Item("Spice Crystals", 500, 5, 7));
+        possibleItems.add(new Item("Rare Minerals", 700, 4, 10));
+        possibleItems.add(new Item("Holo Entertainment Discs", 180, 9, 5));
+        possibleItems.add(new Item("Weapon Components", 350, 5, 9));
         return possibleItems;
     }
 
@@ -81,11 +90,11 @@ public class Planet {
     }
 
     public void printMarket() {
-        Tools.printToConsole("-------------------- Market on " + name + " -------------------", true);
+        Tools.printToConsole("-------------------- Market on " + name + " -------------------");
         for (Item item : marketItems) {
             Tools.printToConsole(
-                    "- " + item.getName() + " | Price: " + item.getCurrentPrice() + " | Available: "
-                            + item.getQuantityAvailable());
+                    "ID: " + item.getItemId() + " - " + item.getName() + " | Available: "
+                            + item.getQuantityAvailable() + " | Price: $" + item.getCurrentPrice());
         }
 
     }
