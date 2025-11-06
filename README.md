@@ -1,7 +1,4 @@
-## 🪐 Intergalactic Trade Simulator — Functional Overview
+🚀 Intergalactic Trade Simulator
 
-🎯 Goal
-
-You are a space trader traveling between planets.
-You buy and sell goods to make profit, while managing fuel and avoiding bankruptcy.
-The game runs entirely in the console.
+A console-based Java game where you become a daring space trader, buying and selling goods across the galaxy to build your fortune.
+Manage your ship’s fuel, cargo, and credits wisely — every trip between planets brings risk, reward, and the occasional pirate ambush.
