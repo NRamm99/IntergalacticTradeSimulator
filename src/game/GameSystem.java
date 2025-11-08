@@ -9,6 +9,9 @@ import utils.Tools;
 import world.Planet;
 
 public class GameSystem {
+    private static final int EARTH_INDEX = 0;
+    private static final int MARS_INDEX = 1;
+    private static final int JUPITER_INDEX = 2;
     private Player player;
     private Planet currentPlanet;
     private Planet[] planets;
@@ -62,7 +65,7 @@ public class GameSystem {
                 3. Open Market (Buy Items)
                 4. Open Market (Sell Items)
 
-                5. Travel to Another Planet (Coming Soon)
+                5. Travel to Another Planet
                 6. Next day (Coming Soon)
 
                 0. Exit Game
@@ -91,7 +94,19 @@ public class GameSystem {
     }
 
     private void promptTravelToAnotherPlanet() {
-        Tools.printToConsole(Tools.RED + "Coming Soon" + Tools.RESET);
+        Tools.printToConsole("""
+                1. Earth
+                2. Mars
+                3. Jupiter
+                """, true);
+        int choice = Tools.validateInt(input, "Choose a planet to travel to");
+        switch (choice) {
+            case 1 -> currentPlanet = planets[EARTH_INDEX];
+            case 2 -> currentPlanet = planets[MARS_INDEX];
+            case 3 -> currentPlanet = planets[JUPITER_INDEX];
+            default -> Tools.printToConsole("Invalid choice. Please try again.");
+        }
+        Tools.printToConsole("You have arrived at " + currentPlanet.getName() + "!");
         Tools.waitForUser(input);
     }
 
@@ -173,7 +188,7 @@ public class GameSystem {
     }
 
     private void viewCurrentPlanet() {
-        Tools.printToConsole(planets[currentPlanetIndex].toString(), true);
+        Tools.printToConsole(currentPlanet.toString(), true);
         Tools.waitForUser(input);
     }
 
