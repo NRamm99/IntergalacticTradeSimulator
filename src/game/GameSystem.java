@@ -16,6 +16,7 @@ public class GameSystem {
     private Planet currentPlanet;
     private Planet[] planets;
     private int currentPlanetIndex;
+    private int day;
     private Scanner input = new Scanner(System.in);
 
     public void start() {
@@ -31,6 +32,7 @@ public class GameSystem {
         this.planets = getPlanets();
         this.currentPlanetIndex = 0;
         this.currentPlanet = planets[currentPlanetIndex];
+        this.day = 1;
     }
 
     private Planet[] getPlanets() {
@@ -58,6 +60,7 @@ public class GameSystem {
 
     private void promptMenu() {
         Tools.titlePrinter("Intergalactic Trade Simulator", true);
+        Tools.printToConsole("Day: " + day + " | Credits: $" + player.getCredits() + "\n");
         Tools.printToConsole("""
                 1. View Ship Status
                 2. View Current Planet
@@ -66,7 +69,7 @@ public class GameSystem {
                 4. Open Market (Sell Items)
 
                 5. Travel to Another Planet
-                6. Next day (Coming Soon)
+                6. Next day
 
                 0. Exit Game
                 """);
@@ -89,8 +92,16 @@ public class GameSystem {
     }
 
     private void promptNextDay() {
-        Tools.printToConsole(Tools.RED + "Coming Soon" + Tools.RESET);
+        day++;
+        updateAllMarkets();
+        Tools.printToConsole("You have advanced to day " + day + "!");
         Tools.waitForUser(input);
+    }
+
+    private void updateAllMarkets() {
+        for (Planet planet : planets) {
+            planet.refreshMarket();
+        }
     }
 
     private void promptTravelToAnotherPlanet() {

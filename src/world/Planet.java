@@ -134,4 +134,8 @@ public class Planet {
         item.setQuantityAvailable(item.getQuantityAvailable() + itemAmount);
     }
 
+    public void refreshMarket() {
+        marketItems = updateMarket();
+    }
+
 }
