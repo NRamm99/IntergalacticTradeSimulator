@@ -71,4 +71,12 @@ public class Ship {
             }
         }
     }
+
+    public void consumeFuel(int amount) {
+        currentFuel -= amount;
+    }
+
+    public boolean hasEnoughFuel(int amount) {
+        return currentFuel >= amount;
+    }
 }

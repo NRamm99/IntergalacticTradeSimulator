@@ -106,19 +106,52 @@ public class GameSystem {
 
     private void promptTravelToAnotherPlanet() {
         Tools.printToConsole("""
-                1. Earth
-                2. Mars
-                3. Jupiter
+                1. Earth (10 fuel needed)
+                2. Mars (20 fuel needed)
+                3. Jupiter (30 fuel needed)
                 """, true);
+        Tools.printToConsole("You have " + player.getShip().getCurrentFuel() + " fuel left.");
         int choice = Tools.validateInt(input, "Choose a planet to travel to");
         switch (choice) {
-            case 1 -> currentPlanet = planets[EARTH_INDEX];
-            case 2 -> currentPlanet = planets[MARS_INDEX];
-            case 3 -> currentPlanet = planets[JUPITER_INDEX];
+            case 1 -> {
+                if (!hasEnoughFuel(10)) {
+                    return;
+                }
+                currentPlanet = planets[EARTH_INDEX];
+                consumeFuel(10);
+            }
+            case 2 -> {
+                if (!hasEnoughFuel(20)) {
+                    return;
+                }
+                currentPlanet = planets[MARS_INDEX];
+                consumeFuel(20);
+            }
+            case 3 -> {
+                if (!hasEnoughFuel(30)) {
+                    return;
+                }
+                currentPlanet = planets[JUPITER_INDEX];
+                consumeFuel(30);
+            }
             default -> Tools.printToConsole("Invalid choice. Please try again.");
         }
         Tools.printToConsole("You have arrived at " + currentPlanet.getName() + "!");
         Tools.waitForUser(input);
+    }
+
+    private boolean hasEnoughFuel(int amount) {
+        if (!player.getShip().hasEnoughFuel(amount)) {
+            Tools.printToConsole("You don't have enough fuel to travel to the next planet. Please try again.",
+                    true);
+            Tools.waitForUser(input);
+            return false;
+        }
+        return true;
+    }
+
+    private void consumeFuel(int amount) {
+        player.getShip().consumeFuel(amount);
     }
 
     private void promptMarketSell() {
